@@ -1,0 +1,30 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "level-01.tmx": {
+            "scale": 0.8557421875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 640.9640754096865,
+                "y": 368.10152006208057
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/Elena/Desktop/tfg/catcat/assets/images/14-TileSets",
+    "map.height": 12,
+    "map.lastUsedFormat": "tmx",
+    "map.width": 20,
+    "openFiles": [
+    ],
+    "project": "catcat.tiled-project",
+    "recentFiles": [
+        "level-01.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
