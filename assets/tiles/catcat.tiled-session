@@ -3,16 +3,23 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level-01.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "Decorations (32x32).tsx": {
+            "scaleInDock": 1
+        },
+        "catcat.tsx": {
+            "scaleInDock": 1
+        },
         "level-01.tmx": {
             "scale": 0.8557421875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 640.9640754096865,
-                "y": 368.10152006208057
+                "x": 220.2766239101657,
+                "y": 185.21933628520566
             }
         }
     },
@@ -21,6 +28,7 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 20,
     "openFiles": [
+        "level-01.tmx"
     ],
     "project": "catcat.tiled-project",
     "recentFiles": [
