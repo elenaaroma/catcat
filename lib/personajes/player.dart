@@ -5,7 +5,7 @@ import 'package:flame/components.dart';
 
 enum PlayerState { idle, run, jump, dead }
 
-class Player extends SpriteAnimationGroupComponent with HasGameRef<catcat> {
+class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
   late final SpriteAnimation idleAnimation;
 
   @override
@@ -17,7 +17,7 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<catcat> {
 
   void _loadAllAnmations() {
     idleAnimation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('characters/red-knight/idle'),
+      game.images.fromCache('characters/red-knight/idle.png'),
       SpriteAnimationData.sequenced(
           amount: 5, stepTime: 0.5, textureSize: Vector2.all(64)),
     );

@@ -10,9 +10,9 @@ void main() {
   Flame.device.fullScreen();
   Flame.device.setLandscape();
 
-  catcat game = catcat();
+  Catcat game = Catcat();
 
   runApp(
-    GameWidget(game: kDebugMode ? catcat() : game),
+    GameWidget(game: kDebugMode ? Catcat() : game),
   );
 }

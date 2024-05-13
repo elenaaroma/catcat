@@ -5,7 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class catcat extends FlameGame {
+class Catcat extends FlameGame {
   @override
   Color backgroundColor() => const Color(0xFF3f3851);
 
