@@ -6,6 +6,10 @@ import 'package:flame/components.dart';
 enum PlayerState { idle, run, dead }
 
 class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
+  //para cambiar de personaje
+  String personaje;
+  Player({required this.personaje});
+
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runAnimation;
   late final SpriteAnimation deadAnimation;
@@ -18,31 +22,31 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
   }
 
   void _loadAllAnmations() {
-// animacion idle para rojo
-    idleAnimation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('characters/red-knight/idle.png'),
-      SpriteAnimationData.sequenced(
-          amount: 5, stepTime: 0.5, textureSize: Vector2.all(64)),
-    );
+//animaciones********************************
+// animacion idle
+    idleAnimation = _spriteAnimation('idle', 5);
 
-// animacion run para rojo
-    runAnimation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('characters/red-knight/run.png'),
-      SpriteAnimationData.sequenced(
-          amount: 8, stepTime: 0.5, textureSize: Vector2.all(64)),
-    );
+// animacion run
+    runAnimation = _spriteAnimation('run', 8);
 
-// animacion dead para rojo
-    deadAnimation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('characters/red-knight/dead.png'),
-      SpriteAnimationData.sequenced(
-          amount: 7, stepTime: 0.5, textureSize: Vector2.all(64)),
-    );
+// animacion dead
+    deadAnimation = _spriteAnimation('dead', 7);
 
+//lista de animaciones
     animations = {
       PlayerState.idle: idleAnimation,
+      PlayerState.run: runAnimation,
+      PlayerState.dead: deadAnimation
     };
 
     current = PlayerState.idle;
+  }
+
+  SpriteAnimation _spriteAnimation(String state, int frames) {
+    return SpriteAnimation.fromFrameData(
+      game.images.fromCache('characters/$personaje/$state.png'),
+      SpriteAnimationData.sequenced(
+          amount: frames, stepTime: 0.5, textureSize: Vector2.all(64)),
+    );
   }
 }
