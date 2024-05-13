@@ -8,7 +8,7 @@ enum PlayerState { idle, run, dead }
 class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
   //para cambiar de personaje
   String personaje;
-  Player({required this.personaje});
+  Player({position, required this.personaje}) : super(position: position);
 
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runAnimation;

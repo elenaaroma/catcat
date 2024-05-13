@@ -15,11 +15,22 @@
             "scaleInDock": 1
         },
         "level-01.tmx": {
-            "scale": 0.8557421875,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 220.2766239101657,
-                "y": 185.21933628520566
+                "x": 309,
+                "y": 220.66666666666669
+            }
+        },
+        "level-02.tmx": {
+            "scale": 1.711484375,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320.48203770484326,
+                "y": 192.23079381019767
             }
         }
     },
