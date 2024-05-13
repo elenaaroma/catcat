@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:catcat/catcat.dart';
 import 'package:flame/components.dart';
 
+enum PlayerState { idle, run, jump, dead }
+
 class Player extends SpriteAnimationGroupComponent with HasGameRef<catcat> {
   late final SpriteAnimation idleAnimation;
 
@@ -19,5 +21,11 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<catcat> {
       SpriteAnimationData.sequenced(
           amount: 5, stepTime: 0.5, textureSize: Vector2.all(64)),
     );
+
+    animations = {
+      PlayerState.idle: idleAnimation,
+    };
+
+    current = PlayerState.idle;
   }
 }
