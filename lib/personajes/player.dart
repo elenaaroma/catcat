@@ -46,7 +46,7 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('characters/$personaje/$state.png'),
       SpriteAnimationData.sequenced(
-          amount: frames, stepTime: 0.5, textureSize: Vector2.all(64)),
+          amount: frames, stepTime: 0.1, textureSize: Vector2.all(64)),
     );
   }
 }
