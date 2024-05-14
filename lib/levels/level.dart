@@ -5,11 +5,14 @@ import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 class Level extends World {
+  final String levelName;
+  Level({required this.levelName});
+
   late TiledComponent level;
 
   @override
   FutureOr<void> onLoad() async {
-    level = await TiledComponent.load('level-01.tmx', Vector2.all(32));
+    level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
 
     add(level);
 
@@ -19,7 +22,7 @@ class Level extends World {
       switch (personajes.class_) {
         case 'Player':
           final player = Player(
-              personaje: 'red-knight',
+              personaje: 'green-knight',
               position: Vector2(personajes.x, personajes.y));
           add(player);
 
