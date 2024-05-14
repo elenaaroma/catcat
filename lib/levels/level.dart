@@ -22,8 +22,8 @@ class Level extends World {
       switch (personajes.class_) {
         case 'Player':
           final player = Player(
-              personaje: 'green-knight',
-              position: Vector2(personajes.x, personajes.y));
+              personaje: 'red-knight',
+              position: Vector2(personajes.x - 25, personajes.y - 35));
           add(player);
 
           break;
