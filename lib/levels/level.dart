@@ -6,7 +6,10 @@ import 'package:flame_tiled/flame_tiled.dart';
 
 class Level extends World {
   final String levelName;
-  Level({required this.levelName});
+
+  final Player player;
+
+  Level({required this.levelName, required this.player});
 
   late TiledComponent level;
 
@@ -21,13 +24,9 @@ class Level extends World {
     for (final personajes in personajes!.objects) {
       switch (personajes.class_) {
         case 'Player':
-          final player = Player(
-              personaje: 'red-knight',
-              position: Vector2(personajes.x - 25, personajes.y - 35));
+          player.position = Vector2(personajes.x - 25, personajes.y - 35);
           add(player);
-
           break;
-
         default:
       }
     }

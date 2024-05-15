@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:catcat/catcat.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/src/services/hardware_keyboard.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
+import 'package:flutter/services.dart';
 
 enum PlayerState { idle, run, dead }
 
@@ -13,7 +12,9 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<Catcat>, KeyboardHandler {
   //para cambiar de personaje
   String personaje;
-  Player({super.position, required this.personaje});
+  Player(
+      {super.position,
+      this.personaje = 'red-knight'}); // por defecto se pone el rojo
 
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runAnimation;

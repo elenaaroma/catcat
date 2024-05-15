@@ -38,6 +38,7 @@ flutter:
     - assets/images/characters/blue-knight/ 
     - assets/images/characters/red-knight/
     - assets/images/characters/green-knight/    
+    - assets/images/HUD/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
