@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:catcat/personajes/player.dart';
+import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 

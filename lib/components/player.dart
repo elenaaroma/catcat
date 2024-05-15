@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:catcat/catcat.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 enum PlayerState { idle, run, dead }
-
-enum PlayerDirection { derecha, izquierda, quieto }
 
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<Catcat>, KeyboardHandler {
@@ -21,12 +20,11 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  PlayerDirection playerDirection = PlayerDirection.quieto;
+  double movimientoHorizontal = 0;
   double moveSpeed = 50;
   Vector2 velocidad = Vector2.zero();
 
   //para que se de la vuelta
-  bool cambioSentido = true;
 
 //carga las animaciones de los personajes
   @override
@@ -38,24 +36,20 @@ class Player extends SpriteAnimationGroupComponent
 //updatea la posicion
   @override
   void update(double dt) {
+    _updatePlayerState();
     _updetePlayerMovimiento(dt);
     super.update(dt);
   }
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    movimientoHorizontal = 0;
+
     final isIzquierdaKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA);
     final isDerechaKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD);
 
-    if (isIzquierdaKeyPressed && isDerechaKeyPressed) {
-      playerDirection = PlayerDirection.quieto;
-    } else if (isDerechaKeyPressed) {
-      playerDirection = PlayerDirection.derecha;
-    } else if (isIzquierdaKeyPressed) {
-      playerDirection = PlayerDirection.izquierda;
-    } else {
-      playerDirection = PlayerDirection.quieto;
-    }
+    movimientoHorizontal += isIzquierdaKeyPressed ? -1 : 0;
+    movimientoHorizontal += isDerechaKeyPressed ? 1 : 0;
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -91,34 +85,24 @@ class Player extends SpriteAnimationGroupComponent
     );
   }
 
-  void _updetePlayerMovimiento(double dt) {
-    double dx = 0.0; //eje x (lados)
-    double dy = 0.0; // eje y (saltos)
+  void _updatePlayerState() {
+    PlayerState playerState = PlayerState.idle;
 
-    switch (playerDirection) {
-      case PlayerDirection.izquierda:
-        if (cambioSentido) {
-          flipHorizontallyAroundCenter();
-          cambioSentido = false;
-        }
-        current = PlayerState.run;
-        dx -= moveSpeed;
-        break;
-      case PlayerDirection.derecha:
-        if (!cambioSentido) {
-          flipHorizontallyAroundCenter();
-          cambioSentido = true;
-        }
-        current = PlayerState.run;
-        dx += moveSpeed;
-        break;
-      case PlayerDirection.quieto:
-        current = PlayerState.idle;
-        break;
-      default:
+    if (velocidad.x < 0 && scale.x > 0) {
+      flipHorizontallyAroundCenter();
+    } else if (velocidad.x > 0 && scale.x < 0) {
+      flipHorizontallyAroundCenter();
     }
 
-    velocidad = Vector2(dx, 0.0);
-    position += velocidad * dt;
+    if (velocidad.x > 0 || velocidad.x < 0) {
+      playerState = PlayerState.run;
+    }
+
+    current = playerState;
+  }
+
+  void _updetePlayerMovimiento(double dt) {
+    velocidad.x = movimientoHorizontal * moveSpeed;
+    position.x += velocidad.x * dt;
   }
 }

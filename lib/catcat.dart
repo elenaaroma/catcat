@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:catcat/levels/level.dart';
-import 'package:catcat/personajes/player.dart';
+import 'package:catcat/components/level.dart';
+import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -16,7 +16,7 @@ class Catcat extends FlameGame
   Player player = Player(personaje: 'red-knight');
 
   late JoystickComponent joystick;
-  bool showJoystick = false;
+  bool showJoystick = true;
 
   @override
   FutureOr<void> onLoad() async {
@@ -47,7 +47,7 @@ class Catcat extends FlameGame
 
   void addJoystick() {
     joystick = JoystickComponent(
-      priority: 100,
+      priority: -1,
       knob: SpriteComponent(
         sprite: Sprite(images.fromCache('HUD/Mando.png')),
       ),
@@ -64,15 +64,15 @@ class Catcat extends FlameGame
       case JoystickDirection.left:
       case JoystickDirection.upLeft:
       case JoystickDirection.downLeft:
-        player.playerDirection = PlayerDirection.izquierda;
+        player.movimientoHorizontal = -1;
         break;
       case JoystickDirection.right:
       case JoystickDirection.upRight:
       case JoystickDirection.downRight:
-        player.playerDirection = PlayerDirection.derecha;
+        player.movimientoHorizontal = 1;
         break;
       default:
-        player.playerDirection = PlayerDirection.quieto;
+        player.movimientoHorizontal = 0;
     }
   }
 }
