@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:catcat/catcat.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/src/services/hardware_keyboard.dart';
+import 'package:flutter/src/services/keyboard_key.g.dart';
 
 enum PlayerState { idle, run, dead }
 
 enum PlayerDirection { derecha, izquierda, quieto }
 
-class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
+class Player extends SpriteAnimationGroupComponent
+    with HasGameRef<Catcat>, KeyboardHandler {
   //para cambiar de personaje
   String personaje;
   Player({super.position, required this.personaje});
@@ -17,7 +20,7 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  PlayerDirection playerDirection = PlayerDirection.izquierda;
+  PlayerDirection playerDirection = PlayerDirection.quieto;
   double moveSpeed = 50;
   Vector2 velocidad = Vector2.zero();
 
@@ -36,6 +39,24 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
   void update(double dt) {
     _updetePlayerMovimiento(dt);
     super.update(dt);
+  }
+
+  @override
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    final isIzquierdaKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA);
+    final isDerechaKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD);
+
+    if (isIzquierdaKeyPressed && isDerechaKeyPressed) {
+      playerDirection = PlayerDirection.quieto;
+    } else if (isDerechaKeyPressed) {
+      playerDirection = PlayerDirection.derecha;
+    } else if (isIzquierdaKeyPressed) {
+      playerDirection = PlayerDirection.izquierda;
+    } else {
+      playerDirection = PlayerDirection.quieto;
+    }
+
+    return super.onKeyEvent(event, keysPressed);
   }
 
 //carga las animaciones de los personajes
@@ -83,6 +104,10 @@ class Player extends SpriteAnimationGroupComponent with HasGameRef<Catcat> {
         dx -= moveSpeed;
         break;
       case PlayerDirection.derecha:
+        if (!cambioSentido) {
+          flipHorizontallyAroundCenter();
+          cambioSentido = true;
+        }
         current = PlayerState.run;
         dx += moveSpeed;
         break;

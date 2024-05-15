@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:catcat/levels/level.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-class Catcat extends FlameGame {
+class Catcat extends FlameGame with HasKeyboardHandlerComponents {
   @override
   Color backgroundColor() => const Color(0xFF3f3851);
 
