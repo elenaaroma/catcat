@@ -12,7 +12,7 @@
             "scaleInDock": 1
         },
         "catcat.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 0.5
         },
         "level-01.tmx": {
             "expandedObjectLayers": [
@@ -21,16 +21,16 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 309,
-                "y": 220.66666666666669
+                "x": 307.6666666666667,
+                "y": 133.33333333333334
             }
         },
         "level-02.tmx": {
             "scale": 1.711484375,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 320.48203770484326,
-                "y": 192.23079381019767
+                "x": 319.6056055142192,
+                "y": 191.93864974665632
             }
         }
     },
@@ -39,10 +39,12 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 20,
     "openFiles": [
-        "level-01.tmx"
+        "level-01.tmx",
+        "level-02.tmx"
     ],
     "project": "catcat.tiled-project",
     "recentFiles": [
+        "level-02.tmx",
         "level-01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"

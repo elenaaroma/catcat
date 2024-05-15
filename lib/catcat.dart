@@ -16,6 +16,7 @@ class Catcat extends FlameGame
   Player player = Player(personaje: 'red-knight');
 
   late JoystickComponent joystick;
+  bool showJoystick = false;
 
   @override
   FutureOr<void> onLoad() async {
@@ -25,16 +26,53 @@ class Catcat extends FlameGame
 
     cam = CameraComponent.withFixedResolution(
         world: world, width: 640, height: 380);
+
     cam.viewfinder.anchor = Anchor.topLeft;
 
-    addAll([cam, world]);
+    addAll([world, cam]);
 
-    addJoystick();
-
+    if (showJoystick) {
+      addJoystick();
+    }
     return super.onLoad();
   }
 
+  @override
+  void update(double dt) {
+    if (showJoystick) {
+      updateJoystic();
+    }
+    super.update(dt);
+  }
+
   void addJoystick() {
-    joystick = JoystickComponent();
+    joystick = JoystickComponent(
+      priority: 100,
+      knob: SpriteComponent(
+        sprite: Sprite(images.fromCache('HUD/Mando.png')),
+      ),
+      background: SpriteComponent(
+        sprite: Sprite(images.fromCache('HUD/Joystick.png')),
+      ),
+      margin: const EdgeInsets.only(left: 32, bottom: 32),
+    );
+    add(joystick);
+  }
+
+  void updateJoystic() {
+    switch (joystick.direction) {
+      case JoystickDirection.left:
+      case JoystickDirection.upLeft:
+      case JoystickDirection.downLeft:
+        player.playerDirection = PlayerDirection.izquierda;
+        break;
+      case JoystickDirection.right:
+      case JoystickDirection.upRight:
+      case JoystickDirection.downRight:
+        player.playerDirection = PlayerDirection.derecha;
+        break;
+      default:
+        player.playerDirection = PlayerDirection.quieto;
+    }
   }
 }

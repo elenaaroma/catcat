@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="9">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="10">
  <tileset firstgid="1" source="catcat.tsx"/>
  <tileset firstgid="248" source="Decorations (32x32).tsx"/>
  <layer id="2" name="fondo" width="20" height="12">
@@ -51,6 +51,6 @@
 </data>
  </layer>
  <objectgroup id="6" name="personajes" offsetx="0.5" offsety="0.666667">
-  <object id="8" name="Player" type="Player" x="50.8333" y="274.667"/>
+  <object id="9" name="Player" type="Player" x="48.1667" y="275.333"/>
  </objectgroup>
 </map>
