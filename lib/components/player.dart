@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:catcat/catcat.dart';
+import 'package:catcat/components/servicios.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:catcat/components/colision_block.dart';
@@ -31,6 +31,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     _loadAllAnmations();
+    debugMode = true;
     return super.onLoad();
   }
 
@@ -39,6 +40,7 @@ class Player extends SpriteAnimationGroupComponent
   void update(double dt) {
     _updatePlayerState();
     _updetePlayerMovimiento(dt);
+    _checkHorizontalCollision();
     super.update(dt);
   }
 
@@ -105,5 +107,18 @@ class Player extends SpriteAnimationGroupComponent
   void _updetePlayerMovimiento(double dt) {
     velocidad.x = movimientoHorizontal * moveSpeed;
     position.x += velocidad.x * dt;
+  }
+
+  void _checkHorizontalCollision() {
+    for (final block in colisionBlocks) {
+      if (!block.isPlatform) {
+        if (checkCollision(this, block)) {
+          if (velocidad.x > 0) {
+            velocidad.x = 0;
+            position.x = block.x - width;
+          }
+        }
+      }
+    }
   }
 }
