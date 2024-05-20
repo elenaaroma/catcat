@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:catcat/components/colision_block.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -13,6 +14,8 @@ class Level extends World {
 
   late TiledComponent level;
 
+  List<ColisionBlock> colisionBlock = [];
+
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
@@ -20,18 +23,45 @@ class Level extends World {
     add(level);
 
     final personajes = level.tileMap.getLayer<ObjectGroup>('personajes');
-
-    for (final personajes in personajes!.objects) {
-      switch (personajes.class_) {
-        case 'Player':
-          player.position = Vector2(personajes.x - 25, personajes.y - 35);
-          add(player);
-          break;
-        default:
+    if (personajes != null) {
+      for (final personajes in personajes.objects) {
+        switch (personajes.class_) {
+          case 'Player':
+            player.position = Vector2(personajes.x - 25, personajes.y - 35);
+            add(player);
+            break;
+          default:
+        }
       }
     }
 
-    // add(Player(personaje: 'red-knight'));
+    final colisionLayer = level.tileMap.getLayer<ObjectGroup>('Colisiones');
+
+    if (colisionLayer != null) {
+      for (final colision in colisionLayer.objects) {
+        switch (colision.class_) {
+          case 'Platform':
+            final platform = ColisionBlock(
+                position: Vector2(colision.x, colision.y),
+                size: Vector2(colision.width, colision.height),
+                isPlatform: true);
+
+            colisionBlock.add(platform);
+            add(platform);
+
+            break;
+          default:
+            final block = ColisionBlock(
+                position: Vector2(colision.x, colision.y),
+                size: Vector2(colision.width, colision.height),
+                isPlatform: true);
+            colisionBlock.add(block);
+            add(block);
+        }
+      }
+    }
+
+    player.colisionBlocks = colisionBlock;
 
     return super.onLoad();
   }

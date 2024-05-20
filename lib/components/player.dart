@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:catcat/catcat.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:catcat/components/colision_block.dart';
 
 enum PlayerState { idle, run, dead }
 
@@ -23,6 +23,7 @@ class Player extends SpriteAnimationGroupComponent
   double movimientoHorizontal = 0;
   double moveSpeed = 50;
   Vector2 velocidad = Vector2.zero();
+  List<ColisionBlock> colisionBlocks = [];
 
   //para que se de la vuelta
 
