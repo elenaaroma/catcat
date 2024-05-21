@@ -19,10 +19,10 @@
                 6
             ],
             "scale": 2,
-            "selectedLayer": 4,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 253.25,
-                "y": 229.5
+                "x": 320,
+                "y": 191.75
             }
         },
         "level-02.tmx": {
@@ -44,8 +44,8 @@
     ],
     "project": "catcat.tiled-project",
     "recentFiles": [
-        "level-01.tmx",
-        "level-02.tmx"
+        "level-02.tmx",
+        "level-01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

@@ -16,38 +16,43 @@ class Catcat extends FlameGame
   Player player = Player(personaje: 'red-knight');
 
   late JoystickComponent joystick;
-  bool showJoystick = false;
+  bool showJoystick = true;
 
   @override
   FutureOr<void> onLoad() async {
+    priority = 0;
     await images.loadAllImages();
 
     final world = Level(levelName: 'level-01', player: player);
+    world.priority = 0;
 
     cam = CameraComponent.withFixedResolution(
-        world: world, width: 640, height: 380);
-
+        world: world, width: 640, height: 380)
+      ..priority = 1; // La cámara tiene una prioridad mayor que el nivel
     cam.viewfinder.anchor = Anchor.topLeft;
 
-    addAll([world, cam]);
+    add(world);
+    add(cam);
 
     if (showJoystick) {
       addJoystick();
     }
+
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
     if (showJoystick) {
-      updateJoystic();
+      updateJoystick();
     }
     super.update(dt);
   }
 
   void addJoystick() {
     joystick = JoystickComponent(
-      priority: -1,
+      priority:
+          2, // Establece una prioridad alta para asegurar que aparezca encima de la cámara y el nivel
       knob: SpriteComponent(
         sprite: Sprite(images.fromCache('HUD/Mando.png')),
       ),
@@ -59,7 +64,7 @@ class Catcat extends FlameGame
     add(joystick);
   }
 
-  void updateJoystic() {
+  void updateJoystick() {
     switch (joystick.direction) {
       case JoystickDirection.left:
       case JoystickDirection.upLeft:
