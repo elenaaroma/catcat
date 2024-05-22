@@ -4,6 +4,7 @@ import 'package:catcat/components/servicios.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:catcat/components/colision_block.dart';
+import 'package:catcat/components/custom_hitbox.dart';
 
 enum PlayerState { idle, run, dead }
 
@@ -20,10 +21,20 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
+  final double _gravedad = 2;
+  final double _salto = 460;
+  final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
   double moveSpeed = 50;
   Vector2 velocidad = Vector2.zero();
+  bool isFloor = false;
   List<ColisionBlock> colisionBlocks = [];
+  CustomHitbox hitbox = CustomHitbox(
+    offsetX: 24, // Desplazamiento desde el borde izquierdo
+    offsetY: 18, // Desplazamiento desde el borde superior
+    width: 16, // Ancho del hitbox
+    height: 28,
+  );
 
   //para que se de la vuelta
 
@@ -41,6 +52,8 @@ class Player extends SpriteAnimationGroupComponent
     _updatePlayerState();
     _updetePlayerMovimiento(dt);
     _checkHorizontalCollision();
+    _checkVerticalCollision();
+    _applyGravity(dt);
     super.update(dt);
   }
 
@@ -115,10 +128,51 @@ class Player extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocidad.x > 0) {
             velocidad.x = 0;
-            position.x = block.x - width;
+            position.x = block.x - hitbox.offsetX - hitbox.width;
+            break;
+          }
+          if (velocidad.x < 0) {
+            velocidad.x = 0;
+            position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
+            break;
           }
         }
       }
     }
+  }
+
+  void _checkVerticalCollision() {
+    for (final block in colisionBlocks) {
+      if (block.isPlatform) {
+        if (checkCollision(this, block)) {
+          if (velocidad.y > 0) {
+            velocidad.y = 0;
+            position.y = block.y - hitbox.height - hitbox.offsetY;
+            isFloor = true;
+            break;
+          }
+          break;
+        }
+      } else {
+        if (checkCollision(this, block)) {
+          if (velocidad.y > 0) {
+            velocidad.y = 0;
+            position.y = block.y - hitbox.height - hitbox.offsetY;
+            isFloor = true;
+            break;
+          }
+          if (velocidad.y < 0) {
+            velocidad.y = 0;
+            position.y = block.y + block.height - hitbox.offsetY;
+          }
+        }
+      }
+    }
+  }
+
+  void _applyGravity(double dt) {
+    velocidad.y += _gravedad;
+    velocidad.y = velocidad.y.clamp(-_salto, _terminalVelocity);
+    position.y += velocidad.y * dt;
   }
 }
