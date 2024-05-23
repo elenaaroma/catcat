@@ -51,7 +51,7 @@
 </data>
  </layer>
  <objectgroup id="6" name="personajes" offsetx="0.5" offsety="0.666667">
-  <object id="9" name="Player" type="Player" x="61" y="261"/>
+  <object id="9" name="Player" type="Player" x="503" y="213"/>
  </objectgroup>
  <objectgroup id="9" name="Colisiones">
   <object id="33" x="1" y="1" width="639" height="31"/>

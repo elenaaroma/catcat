@@ -22,13 +22,15 @@ class Player extends SpriteAnimationGroupComponent
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
   final double _gravedad = 2;
-  final double _salto = 460;
+  final double _salto = 220;
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
-  double moveSpeed = 50;
+  double moveSpeed = 70;
   Vector2 velocidad = Vector2.zero();
   bool isFloor = false;
+  bool hasJumped = false;
   List<ColisionBlock> colisionBlocks = [];
+
   CustomHitbox hitbox = CustomHitbox(
     offsetX: 24, // Desplazamiento desde el borde izquierdo
     offsetY: 18, // Desplazamiento desde el borde superior
@@ -52,8 +54,9 @@ class Player extends SpriteAnimationGroupComponent
     _updatePlayerState();
     _updetePlayerMovimiento(dt);
     _checkHorizontalCollision();
-    _checkVerticalCollision();
     _applyGravity(dt);
+    _checkVerticalCollision();
+
     super.update(dt);
   }
 
@@ -66,6 +69,8 @@ class Player extends SpriteAnimationGroupComponent
 
     movimientoHorizontal += isIzquierdaKeyPressed ? -1 : 0;
     movimientoHorizontal += isDerechaKeyPressed ? 1 : 0;
+
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -118,8 +123,17 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updetePlayerMovimiento(double dt) {
+    if (hasJumped && isFloor) _playerJump(dt);
+
     velocidad.x = movimientoHorizontal * moveSpeed;
     position.x += velocidad.x * dt;
+  }
+
+  void _playerJump(double dt) {
+    velocidad.y = -_salto;
+    position.y += velocidad.y * dt;
+    isFloor = false;
+    hasJumped = false;
   }
 
   void _checkHorizontalCollision() {
@@ -128,12 +142,12 @@ class Player extends SpriteAnimationGroupComponent
         if (checkCollision(this, block)) {
           if (velocidad.x > 0) {
             velocidad.x = 0;
-            position.x = block.x - hitbox.offsetX - hitbox.width;
+            position.x = block.position.x - hitbox.offsetX - hitbox.width;
             break;
           }
           if (velocidad.x < 0) {
             velocidad.x = 0;
-            position.x = block.x + block.width + hitbox.width + hitbox.offsetX;
+            position.x = block.position.x + block.size.x - hitbox.offsetX;
             break;
           }
         }
@@ -143,27 +157,24 @@ class Player extends SpriteAnimationGroupComponent
 
   void _checkVerticalCollision() {
     for (final block in colisionBlocks) {
-      if (block.isPlatform) {
-        if (checkCollision(this, block)) {
+      if (checkCollision(this, block)) {
+        if (block.isPlatform) {
           if (velocidad.y > 0) {
             velocidad.y = 0;
-            position.y = block.y - hitbox.height - hitbox.offsetY;
+            position.y = block.position.y - hitbox.height - hitbox.offsetY;
             isFloor = true;
             break;
           }
-          break;
-        }
-      } else {
-        if (checkCollision(this, block)) {
+        } else {
           if (velocidad.y > 0) {
             velocidad.y = 0;
-            position.y = block.y - hitbox.height - hitbox.offsetY;
+            position.y = block.position.y - hitbox.height - hitbox.offsetY;
             isFloor = true;
             break;
           }
           if (velocidad.y < 0) {
             velocidad.y = 0;
-            position.y = block.y + block.height - hitbox.offsetY;
+            position.y = block.position.y + block.size.y - hitbox.offsetY;
           }
         }
       }
