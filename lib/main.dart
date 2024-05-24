@@ -1,18 +1,26 @@
-import 'package:catcat/catcat.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:catcat/screens/home_screen.dart';
+import 'package:flame/flame.dart';
 
 void main() async {
-  //para que se vea en pantalla completa
+  // Para que se vea en pantalla completa y en horizontal
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
 
-  Catcat game = Catcat();
+  runApp(MyApp());
+}
 
-  runApp(
-    GameWidget(game: kDebugMode ? Catcat() : game),
-  );
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Catcat Game',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomeScreen(),
+      debugShowCheckedModeBanner: false, // Quitar el banner de depuración
+    );
+  }
 }
