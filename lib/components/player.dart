@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:catcat/catcat.dart';
 import 'package:catcat/components/servicios.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:catcat/components/colision_block.dart';
@@ -21,8 +22,8 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  final double _gravedad = 2;
-  final double _salto = 220;
+  final double _gravedad = 7.8;
+  final double _salto = 250;
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
   double moveSpeed = 70;
@@ -45,6 +46,10 @@ class Player extends SpriteAnimationGroupComponent
   FutureOr<void> onLoad() {
     _loadAllAnmations();
     debugMode = true;
+    /*add(RectangleHitbox(
+        position: Vector2(hitbox.offsetX, hitbox.offsetY),
+        size: Vector2(hitbox.width, hitbox.height)));
+    */
     return super.onLoad();
   }
 
