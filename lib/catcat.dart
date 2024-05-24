@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:catcat/components/level.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Catcat extends FlameGame
@@ -33,6 +35,13 @@ class Catcat extends FlameGame
 
     add(world);
     add(cam);
+
+    // Detectar si la aplicación se está ejecutando en la web
+    if (kIsWeb) {
+      showJoystick = false;
+    } else {
+      showJoystick = true;
+    }
 
     if (showJoystick) {
       addJoystick();

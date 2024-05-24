@@ -37,12 +37,29 @@ class RegisterDialog extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Aquí agregarás la funcionalidad para registrar el usuario
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PlayScreen()),
-                );
+                if (emailController.text.isEmpty ||
+                    passwordController.text.isEmpty ||
+                    confirmPasswordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Por favor, complete todos los campos'),
+                    ),
+                  );
+                } else if (passwordController.text !=
+                    confirmPasswordController.text) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Las contraseñas no coinciden'),
+                    ),
+                  );
+                } else {
+                  // Aquí agregarás la funcionalidad para registrar el usuario
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PlayScreen()),
+                  );
+                }
               },
               child: Text('Confirmar'),
             ),
