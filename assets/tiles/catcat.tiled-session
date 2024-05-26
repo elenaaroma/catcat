@@ -19,10 +19,10 @@
                 6
             ],
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 320,
-                "y": 191.75
+                "x": 316.75,
+                "y": 189
             }
         },
         "level-02.tmx": {

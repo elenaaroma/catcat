@@ -18,6 +18,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: 1.0.6
   flame_tiled: ^1.19.0
+  audioplayers: ^5.0.0
+  flutter_sound: ^9.1.5
 
 dev_dependencies:
   hive_generator: 2.0.1
@@ -41,6 +43,8 @@ flutter:
     - assets/images/HUD/
     - assets/images/fondo/fondo1.jpg
     - assets/images/fondo/fondo3.jpg
+    - assets/audio/musica_menu.wav
+    - assets/audio/musica_menu.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

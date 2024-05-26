@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="50">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="52">
  <tileset firstgid="1" source="catcat.tsx"/>
  <tileset firstgid="248" source="Decorations (32x32).tsx"/>
  <layer id="2" name="fondo" width="20" height="12">
@@ -68,5 +68,8 @@
   <object id="46" x="545" y="96" width="29" height="11"/>
   <object id="47" type="Platform" x="352" y="257" width="64" height="13"/>
   <object id="48" type="Platform" x="352" y="320" width="64" height="13"/>
+ </objectgroup>
+ <objectgroup id="10" name="Gato">
+  <object id="50" type="Cat" x="61" y="82"/>
  </objectgroup>
 </map>
