@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:catcat/components/level.dart';
 import 'package:catcat/components/player.dart';

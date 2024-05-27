@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:catcat/components/colision_block.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 class Level extends World {
@@ -16,11 +17,16 @@ class Level extends World {
 
   List<ColisionBlock> colisionBlock = [];
 
+  AudioPlayer audioPlayer = AudioPlayer();
+
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
 
     add(level);
+
+    await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
+    //audioPlayer.setVolume(game.volumenSonido * .5);
 
     final personajes = level.tileMap.getLayer<ObjectGroup>('personajes');
     if (personajes != null) {

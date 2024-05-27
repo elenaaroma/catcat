@@ -43,8 +43,7 @@ flutter:
     - assets/images/HUD/
     - assets/images/fondo/fondo1.jpg
     - assets/images/fondo/fondo3.jpg
-    - assets/audio/musica_menu.wav
-    - assets/audio/musica_menu.mp3
+    - assets/audio/musica_juego.mp3
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
