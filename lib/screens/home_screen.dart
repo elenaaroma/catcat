@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:catcat/screens/register_dialog.dart';
 import 'package:catcat/screens/login_dialog.dart';
-import 'package:catcat/screens/play_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

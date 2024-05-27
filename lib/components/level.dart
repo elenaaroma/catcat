@@ -8,13 +8,11 @@ import 'package:flame_tiled/flame_tiled.dart';
 
 class Level extends World {
   final String levelName;
-
   final Player player;
 
   Level({required this.levelName, required this.player});
 
   late TiledComponent level;
-
   List<ColisionBlock> colisionBlock = [];
 
   AudioPlayer audioPlayer = AudioPlayer();
@@ -22,11 +20,10 @@ class Level extends World {
   @override
   FutureOr<void> onLoad() async {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
-
     add(level);
 
-    await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
-    //audioPlayer.setVolume(game.volumenSonido * .5);
+    // Reproducir la música en bucle cada minuto
+    playMusicLoop();
 
     final personajes = level.tileMap.getLayer<ObjectGroup>('personajes');
     if (personajes != null) {
@@ -42,7 +39,6 @@ class Level extends World {
     }
 
     final colisionLayer = level.tileMap.getLayer<ObjectGroup>('Colisiones');
-
     if (colisionLayer != null) {
       for (final colision in colisionLayer.objects) {
         switch (colision.class_) {
@@ -51,10 +47,8 @@ class Level extends World {
                 position: Vector2(colision.x, colision.y),
                 size: Vector2(colision.width, colision.height),
                 isPlatform: true);
-
             colisionBlock.add(platform);
             add(platform);
-
             break;
           default:
             final block = ColisionBlock(
@@ -70,5 +64,20 @@ class Level extends World {
     player.colisionBlocks = colisionBlock;
 
     return super.onLoad();
+  }
+
+  Future<void> playMusicLoop() async {
+    while (true) {
+      await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
+      audioPlayer.setVolume(0.1);
+      await Future.delayed(Duration(minutes: 1));
+    }
+  }
+
+  @override
+  void onRemove() {
+    // Detener la música y el temporizador cuando el nivel se elimine
+    audioPlayer.stop();
+    super.onRemove();
   }
 }

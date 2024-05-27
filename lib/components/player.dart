@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:catcat/catcat.dart';
 import 'package:catcat/components/servicios.dart';
-import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:catcat/components/colision_block.dart';
@@ -22,11 +21,11 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  final double _gravedad = 7.8;
-  final double _salto = 250;
+  final double _gravedad = 5.8;
+  final double _salto = 370;
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
-  double moveSpeed = 70;
+  double moveSpeed = 100;
   Vector2 velocidad = Vector2.zero();
   bool isFloor = false;
   bool hasJumped = false;
@@ -61,6 +60,7 @@ class Player extends SpriteAnimationGroupComponent
     _checkHorizontalCollision();
     _applyGravity(dt);
     _checkVerticalCollision();
+    _checkOutOfBounds();
 
     super.update(dt);
   }
@@ -152,7 +152,10 @@ class Player extends SpriteAnimationGroupComponent
           }
           if (velocidad.x < 0) {
             velocidad.x = 0;
-            position.x = block.position.x + block.size.x - hitbox.offsetX;
+            //Faltaba una suma + hitbox.width + hitbox.offsetX
+            //position.x = block.position.x + block.size.x - hitbox.offsetX;
+            position.x =
+                block.position.x + block.size.x + hitbox.width + hitbox.offsetX;
             break;
           }
         }
@@ -190,5 +193,22 @@ class Player extends SpriteAnimationGroupComponent
     velocidad.y += _gravedad;
     velocidad.y = velocidad.y.clamp(-_salto, _terminalVelocity);
     position.y += velocidad.y * dt;
+  }
+
+  void _checkOutOfBounds() {
+    final screenWidth = gameRef.size.x;
+    final screenHeight = gameRef.size.y;
+
+    if (position.x < 0 ||
+        position.x > screenWidth ||
+        position.y < 0 ||
+        position.y > screenHeight) {
+      print(
+          'El jugador se ha salido de la pantalla en las coordenadas: (${position.x}, ${position.y})');
+      // Reposicionar el jugador en la posición inicial
+      position = Vector2(
+          100, 100); // Puedes ajustar esta posición inicial según sea necesario
+      velocidad = Vector2.zero(); // Resetear la velocidad
+    }
   }
 }

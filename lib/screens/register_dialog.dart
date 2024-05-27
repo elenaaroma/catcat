@@ -7,12 +7,14 @@ class RegisterDialog extends StatelessWidget {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+  RegisterDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
@@ -22,33 +24,34 @@ class RegisterDialog extends StatelessWidget {
           children: <Widget>[
             TextField(
               controller: emailController,
-              decoration: InputDecoration(hintText: 'Correo'),
+              decoration: const InputDecoration(hintText: 'Correo'),
             ),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(hintText: 'Contraseña'),
+              decoration: const InputDecoration(hintText: 'Contraseña'),
               obscureText: true,
             ),
             TextField(
               controller: confirmPasswordController,
-              decoration: InputDecoration(hintText: 'Confirmar Contraseña'),
+              decoration:
+                  const InputDecoration(hintText: 'Confirmar Contraseña'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (emailController.text.isEmpty ||
                     passwordController.text.isEmpty ||
                     confirmPasswordController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Por favor, complete todos los campos'),
                     ),
                   );
                 } else if (passwordController.text !=
                     confirmPasswordController.text) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Las contraseñas no coinciden'),
                     ),
                   );
@@ -61,7 +64,7 @@ class RegisterDialog extends StatelessWidget {
                   );
                 }
               },
-              child: Text('Confirmar'),
+              child: const Text('Confirmar'),
             ),
           ],
         ),
