@@ -52,6 +52,7 @@
  </layer>
  <objectgroup id="6" name="personajes" offsetx="0.5" offsety="0.666667">
   <object id="9" name="Player" type="Player" x="65" y="254"/>
+  <object id="50" type="Gato" x="61" y="82"/>
  </objectgroup>
  <objectgroup id="9" name="Colisiones">
   <object id="33" x="1" y="1" width="639" height="31"/>
@@ -68,8 +69,5 @@
   <object id="46" x="545" y="96" width="29" height="11"/>
   <object id="47" type="Platform" x="352" y="257" width="64" height="13"/>
   <object id="48" type="Platform" x="352" y="320" width="64" height="13"/>
- </objectgroup>
- <objectgroup id="10" name="Gato">
-  <object id="50" type="Cat" x="61" y="82"/>
  </objectgroup>
 </map>

@@ -210,9 +210,6 @@ class Player extends SpriteAnimationGroupComponent
         position.x > screenWidth ||
         position.y < 0 ||
         position.y > screenHeight) {
-      print(
-          'El jugador se ha salido de la pantalla en las coordenadas: (${position.x}, ${position.y})');
-      // Reposicionar el jugador en la posición inicial
       position = Vector2(
           100, 100); // Puedes ajustar esta posición inicial según sea necesario
       velocidad = Vector2.zero(); // Resetear la velocidad

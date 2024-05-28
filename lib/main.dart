@@ -1,3 +1,4 @@
+import 'package:catcat/screens/play_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:catcat/screens/home_screen.dart';
 import 'package:flame/flame.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: PlayScreen(),
       debugShowCheckedModeBanner: false, // Quitar el banner de depuración
     );
   }

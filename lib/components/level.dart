@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:catcat/components/colision_block.dart';
+import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -22,22 +23,51 @@ class Level extends World {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
     add(level);
 
-    // Reproducir la música en bucle cada minuto
     playMusicLoop();
+    _spawningObjects();
+    _addCollision();
 
+    return super.onLoad();
+  }
+
+  Future<void> playMusicLoop() async {
+    while (true) {
+      await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
+      audioPlayer.setVolume(0.1);
+      await Future.delayed(const Duration(minutes: 1));
+    }
+  }
+
+  @override
+  void onRemove() {
+    // Detener la música y el temporizador cuando el nivel se elimine
+    audioPlayer.stop();
+    super.onRemove();
+  }
+
+  void _spawningObjects() {
     final personajes = level.tileMap.getLayer<ObjectGroup>('personajes');
+
     if (personajes != null) {
-      for (final personajes in personajes.objects) {
-        switch (personajes.class_) {
+      for (final personaje in personajes.objects) {
+        switch (personaje.class_) {
           case 'Player':
-            player.position = Vector2(personajes.x - 25, personajes.y - 35);
+            player.position = Vector2(personaje.x - 25, personaje.y - 35);
             add(player);
+            break;
+          case 'Gato':
+            final checkpoint = Gato(
+              position: Vector2(personaje.x - 20, personaje.y - 17),
+            );
+            add(checkpoint);
             break;
           default:
         }
       }
     }
+  }
 
+  void _addCollision() {
     final colisionLayer = level.tileMap.getLayer<ObjectGroup>('Colisiones');
     if (colisionLayer != null) {
       for (final colision in colisionLayer.objects) {
@@ -62,22 +92,5 @@ class Level extends World {
     }
 
     player.colisionBlocks = colisionBlock;
-
-    return super.onLoad();
-  }
-
-  Future<void> playMusicLoop() async {
-    while (true) {
-      await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
-      audioPlayer.setVolume(0.1);
-      await Future.delayed(Duration(minutes: 1));
-    }
-  }
-
-  @override
-  void onRemove() {
-    // Detener la música y el temporizador cuando el nivel se elimine
-    audioPlayer.stop();
-    super.onRemove();
   }
 }

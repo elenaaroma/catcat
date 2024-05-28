@@ -39,7 +39,8 @@ flutter:
     - assets/tiles/
     - assets/images/characters/blue-knight/ 
     - assets/images/characters/red-knight/
-    - assets/images/characters/green-knight/    
+    - assets/images/characters/green-knight/  
+    - assets/images/cat/idle.png
     - assets/images/HUD/
     - assets/images/fondo/fondo1.jpg
     - assets/images/fondo/fondo3.jpg
