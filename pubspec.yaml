@@ -41,6 +41,7 @@ flutter:
     - assets/images/characters/red-knight/
     - assets/images/characters/green-knight/  
     - assets/images/cat/idle.png
+    - assets/images/cat/fin.png
     - assets/images/HUD/
     - assets/images/fondo/fondo1.jpg
     - assets/images/fondo/fondo3.jpg
