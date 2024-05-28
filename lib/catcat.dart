@@ -5,6 +5,7 @@ import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class Catcat extends FlameGame
   Player player = Player(personaje: 'red-knight');
 
   late JoystickComponent joystick;
+  late SpriteButtonComponent jumpButton;
   bool showJoystick = false;
 
   @override
@@ -44,6 +46,7 @@ class Catcat extends FlameGame
 
     if (showJoystick) {
       addJoystick();
+      addJumpButton();
     }
 
     return super.onLoad();
@@ -87,5 +90,21 @@ class Catcat extends FlameGame
       default:
         player.movimientoHorizontal = 0;
     }
+  }
+
+  void addJumpButton() {
+    jumpButton = SpriteButtonComponent(
+      button: Sprite(images.fromCache('HUD/JumpFlecha.png')),
+      buttonDown: Sprite(images.fromCache(
+          'HUD/JumpFlecha.png')), // Usa la misma imagen para ambos estados
+      onPressed: () {
+        player.jump();
+      },
+      position: Vector2(size.x - 100,
+          size.y - 100), // Posición en la esquina inferior derecha
+      priority:
+          2, // Establece una prioridad alta para asegurar que aparezca encima de la cámara y el nivel
+    );
+    add(jumpButton);
   }
 }

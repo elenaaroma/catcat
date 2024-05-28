@@ -21,8 +21,8 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  final double _gravedad = 5.8;
-  final double _salto = 370;
+  final double _gravedad = 6.9;
+  final double _salto = 230;
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
   double moveSpeed = 100;
@@ -139,6 +139,13 @@ class Player extends SpriteAnimationGroupComponent
     position.y += velocidad.y * dt;
     isFloor = false;
     hasJumped = false;
+  }
+
+  void jump() {
+    if (isFloor) {
+      velocidad.y = -_salto - 300;
+      isFloor = false;
+    }
   }
 
   void _checkHorizontalCollision() {
