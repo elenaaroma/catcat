@@ -56,10 +56,9 @@ class Level extends World {
             add(player);
             break;
           case 'Gato':
-            final checkpoint = Gato(
-              position: Vector2(personaje.x - 20, personaje.y - 17),
-            );
-            add(checkpoint);
+            final gato =
+                Gato(position: Vector2(personaje.x - 25, personaje.y - 17));
+            add(gato);
             break;
           default:
         }

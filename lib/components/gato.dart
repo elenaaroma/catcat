@@ -12,6 +12,8 @@ class Gato extends SpriteAnimationComponent
     super.size,
   });
 
+  bool reachedCheckpoint = false;
+
   @override
   FutureOr<void> onLoad() {
     debugMode = true;
@@ -31,16 +33,32 @@ class Gato extends SpriteAnimationComponent
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is Player) {
+    if (other is Player && !reachedCheckpoint) {
+      print('colaiding');
       _reachedCheckpoint();
     }
     super.onCollision(intersectionPoints, other);
   }
 
   void _reachedCheckpoint() {
+    reachedCheckpoint = true;
     animation = SpriteAnimation.fromFrameData(
         game.images.fromCache('cat/fin.png'),
         SpriteAnimationData.sequenced(
-            amount: 6, stepTime: 0.1, textureSize: Vector2.all(32)));
+            amount: 6,
+            stepTime: 0.1,
+            textureSize: Vector2.all(32),
+            loop: false));
+
+    const catDuration = Duration(milliseconds: 1300);
+    Future.delayed(catDuration, () {
+      animation = SpriteAnimation.fromFrameData(
+          game.images.fromCache('cat/idle.png'),
+          SpriteAnimationData.sequenced(
+            amount: 4,
+            stepTime: 0.1,
+            textureSize: Vector2.all(32),
+          ));
+    });
   }
 }

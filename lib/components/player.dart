@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:catcat/catcat.dart';
+import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/servicios.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:catcat/components/colision_block.dart';
@@ -9,7 +11,7 @@ import 'package:catcat/components/custom_hitbox.dart';
 enum PlayerState { idle, run, dead }
 
 class Player extends SpriteAnimationGroupComponent
-    with HasGameRef<Catcat>, KeyboardHandler {
+    with HasGameRef<Catcat>, KeyboardHandler, CollisionCallbacks {
   //para cambiar de personaje
   String personaje;
   Player(
@@ -26,9 +28,11 @@ class Player extends SpriteAnimationGroupComponent
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
   double moveSpeed = 100;
+  Vector2 startingPosition = Vector2.zero();
   Vector2 velocidad = Vector2.zero();
   bool isFloor = false;
   bool hasJumped = false;
+  bool reachedCheckpoint = false;
   List<ColisionBlock> colisionBlocks = [];
 
   CustomHitbox hitbox = CustomHitbox(
@@ -44,11 +48,12 @@ class Player extends SpriteAnimationGroupComponent
   @override
   FutureOr<void> onLoad() {
     _loadAllAnmations();
+    startingPosition = Vector2(position.x, position.y);
     debugMode = true;
-    /*add(RectangleHitbox(
+    add(RectangleHitbox(
         position: Vector2(hitbox.offsetX, hitbox.offsetY),
         size: Vector2(hitbox.width, hitbox.height)));
-    */
+
     return super.onLoad();
   }
 
@@ -78,6 +83,15 @@ class Player extends SpriteAnimationGroupComponent
     hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
 
     return super.onKeyEvent(event, keysPressed);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (!reachedCheckpoint) {
+      if (other is Gato) _reachedCheckpoint();
+    }
+
+    super.onCollision(intersectionPoints, other);
   }
 
 //carga las animaciones de los personajes
@@ -214,5 +228,18 @@ class Player extends SpriteAnimationGroupComponent
           100, 100); // Puedes ajustar esta posición inicial según sea necesario
       velocidad = Vector2.zero(); // Resetear la velocidad
     }
+  }
+
+  void _reachedCheckpoint() {
+    reachedCheckpoint = true;
+
+    const reachedCheckpointDuration = Duration(milliseconds: 350);
+    Future.delayed(reachedCheckpointDuration, () {
+      reachedCheckpoint = false;
+      const waitToChange = Duration(seconds: 1);
+      Future.delayed(waitToChange, () {
+        game.loadNextLevel();
+      });
+    });
   }
 }

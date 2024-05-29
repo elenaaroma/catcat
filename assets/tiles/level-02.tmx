@@ -36,6 +36,6 @@
  </layer>
  <objectgroup id="5" name="Capa de Objetos 1" visible="0"/>
  <objectgroup id="6" name="personajes">
-  <object id="3" x="76" y="310" width="27" height="29"/>
+  <object id="3" name="Player" type="Player" x="76" y="310" width="27" height="29"/>
  </objectgroup>
 </map>

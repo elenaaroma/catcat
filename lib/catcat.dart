@@ -10,32 +10,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Catcat extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks {
+    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
   @override
   Color backgroundColor() => const Color(0xFF3f3851);
 
-  late final CameraComponent cam;
+  late CameraComponent cam;
   Player player = Player(personaje: 'red-knight');
 
   late JoystickComponent joystick;
   late SpriteButtonComponent jumpButton;
   bool showJoystick = false;
+  List<String> levelNames = ['level-01', 'level-02'];
+  int currentLevelIndex = 0;
 
   @override
   FutureOr<void> onLoad() async {
     priority = 0;
     await images.loadAllImages();
 
-    final world = Level(levelName: 'level-01', player: player);
-    world.priority = 0;
-
-    cam = CameraComponent.withFixedResolution(
-        world: world, width: 640, height: 380)
-      ..priority = 1; // La cámara tiene una prioridad mayor que el nivel
-    cam.viewfinder.anchor = Anchor.topLeft;
-
-    add(world);
-    add(cam);
+    _loadLevel();
 
     // Detectar si la aplicación se está ejecutando en la web
     if (kIsWeb) {
@@ -106,5 +99,30 @@ class Catcat extends FlameGame
           2, // Establece una prioridad alta para asegurar que aparezca encima de la cámara y el nivel
     );
     add(jumpButton);
+  }
+
+  void loadNextLevel() {
+    if (currentLevelIndex < levelNames.length - 1) {
+      currentLevelIndex++;
+      _loadLevel();
+    } else {}
+  }
+
+  void _loadLevel() {
+    player = Player();
+
+    Future.delayed(const Duration(seconds: 1), () {
+      Level world =
+          Level(levelName: levelNames[currentLevelIndex], player: player);
+      world.priority = 0;
+
+      cam = CameraComponent.withFixedResolution(
+          world: world, width: 640, height: 380)
+        ..priority = 1; // La cámara tiene una prioridad mayor que el nivel
+      cam.viewfinder.anchor = Anchor.topLeft;
+
+      add(world);
+      add(cam);
+    });
   }
 }
