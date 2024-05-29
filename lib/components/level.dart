@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:catcat/components/colision_block.dart';
 import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/player.dart';
@@ -23,7 +22,7 @@ class Level extends World {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
     add(level);
 
-    playMusicLoop();
+    playMusicLoop(); // Iniciar la música en bucle
     _spawningObjects();
     _addCollision();
 
@@ -32,15 +31,25 @@ class Level extends World {
 
   Future<void> playMusicLoop() async {
     while (true) {
-      await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
-      audioPlayer.setVolume(0.1);
-      await Future.delayed(const Duration(minutes: 1));
+      try {
+        await audioPlayer
+            .stop(); // Detener cualquier música que esté reproduciéndose
+        await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
+        audioPlayer.setVolume(0.1);
+        await Future.delayed(const Duration(minutes: 1));
+      } catch (ex) {
+        print('Error al reproducir la música: $ex');
+      }
     }
+  }
+
+  void stopMusic() {
+    audioPlayer.stop();
   }
 
   @override
   void onRemove() {
-    // Detener la música y el temporizador cuando el nivel se elimine
+    // Detener la música cuando el nivel se elimine
     audioPlayer.stop();
     super.onRemove();
   }

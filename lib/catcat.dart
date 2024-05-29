@@ -23,8 +23,10 @@ class Catcat extends FlameGame
   List<String> levelNames = ['level-01', 'level-02'];
   int currentLevelIndex = 0;
 
+  Level? currentLevel; // Referencia al nivel actual
+
   @override
-  FutureOr<void> onLoad() async {
+  Future<void> onLoad() async {
     priority = 0;
     await images.loadAllImages();
 
@@ -111,14 +113,21 @@ class Catcat extends FlameGame
   void _loadLevel() {
     player = Player();
 
+    // Detener la música del nivel anterior si está reproduciéndose
+    if (currentLevel != null) {
+      currentLevel!.stopMusic();
+      remove(currentLevel!);
+    }
+
     Future.delayed(const Duration(seconds: 1), () {
       Level world =
           Level(levelName: levelNames[currentLevelIndex], player: player);
+      currentLevel = world; // Actualizar la referencia al nivel actual
       world.priority = 0;
 
       cam = CameraComponent.withFixedResolution(
           world: world, width: 640, height: 380)
-        ..priority = 1; // La cámara tiene una prioridad mayor que el nivel
+        ..priority = 1;
       cam.viewfinder.anchor = Anchor.topLeft;
 
       add(world);
