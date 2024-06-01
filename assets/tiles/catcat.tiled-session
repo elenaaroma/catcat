@@ -16,21 +16,26 @@
         },
         "level-01.tmx": {
             "expandedObjectLayers": [
+                9,
                 6
             ],
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 195.25,
-                "y": 187.5
+                "x": 194.75,
+                "y": 186.5
             }
         },
         "level-02.tmx": {
+            "expandedObjectLayers": [
+                7,
+                6
+            ],
             "scale": 1.711484375,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 319.31346145067783,
-                "y": 191.0622175560323
+                "x": 318.7291733235952,
+                "y": 189.893641301867
             }
         }
     },
@@ -43,6 +48,7 @@
         "level-02.tmx"
     ],
     "project": "catcat.tiled-project",
+    "property.type": "float",
     "recentFiles": [
         "level-02.tmx",
         "level-01.tmx"

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:catcat/components/colision_block.dart';
+import 'package:catcat/components/enemy.dart';
 import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
@@ -31,15 +32,11 @@ class Level extends World {
 
   Future<void> playMusicLoop() async {
     while (true) {
-      try {
-        await audioPlayer
-            .stop(); // Detener cualquier música que esté reproduciéndose
-        await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
-        audioPlayer.setVolume(0.1);
-        await Future.delayed(const Duration(minutes: 1));
-      } catch (ex) {
-        print('Error al reproducir la música: $ex');
-      }
+      await audioPlayer
+          .stop(); // Detener cualquier música que esté reproduciéndose
+      await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
+      audioPlayer.setVolume(0.1);
+      await Future.delayed(const Duration(minutes: 1));
     }
   }
 
@@ -68,6 +65,17 @@ class Level extends World {
             final gato =
                 Gato(position: Vector2(personaje.x - 25, personaje.y - 17));
             add(gato);
+            break;
+          case 'Enemy':
+            final isVertical = personaje.properties.getValue('isVertical');
+            final offNeg = personaje.properties.getValue('offNeg');
+            final offPos = personaje.properties.getValue('offPos');
+            final enemigo = Enemy(
+                isVertical: isVertical,
+                offNeg: offNeg,
+                offPos: offPos,
+                position: Vector2(personaje.x - 25, personaje.y - 25));
+            add(enemigo);
             break;
           default:
         }
