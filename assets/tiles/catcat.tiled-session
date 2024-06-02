@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-01.tmx",
+    "activeFile": "level-03.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -19,11 +19,11 @@
                 9,
                 6
             ],
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 194.75,
-                "y": 186.5
+                "x": 246.3333333333333,
+                "y": 192
             }
         },
         "level-02.tmx": {
@@ -37,6 +37,18 @@
                 "x": 318.7291733235952,
                 "y": 189.893641301867
             }
+        },
+        "level-03.tmx": {
+            "expandedObjectLayers": [
+                4,
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 349,
+                "y": 142
+            }
         }
     },
     "last.imagePath": "C:/Users/Elena/Desktop/tfg/catcat/assets/images/14-TileSets",
@@ -45,13 +57,15 @@
     "map.width": 20,
     "openFiles": [
         "level-01.tmx",
-        "level-02.tmx"
+        "level-02.tmx",
+        "level-03.tmx"
     ],
     "project": "catcat.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "level-01.tmx",
         "level-02.tmx",
-        "level-01.tmx"
+        "level-03.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

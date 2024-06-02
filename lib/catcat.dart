@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:catcat/components/level.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
@@ -20,7 +19,10 @@ class Catcat extends FlameGame
   late JoystickComponent joystick;
   late SpriteButtonComponent jumpButton;
   bool showJoystick = false;
-  List<String> levelNames = ['level-01', 'level-02'];
+  List<String> levelNames = [
+    'level-03',
+    'level-02',
+  ];
   int currentLevelIndex = 0;
 
   Level? currentLevel; // Referencia al nivel actual
@@ -107,7 +109,9 @@ class Catcat extends FlameGame
     if (currentLevelIndex < levelNames.length - 1) {
       currentLevelIndex++;
       _loadLevel();
-    } else {}
+    } else {
+      print('No more levels to load');
+    }
   }
 
   void _loadLevel() {
@@ -120,8 +124,9 @@ class Catcat extends FlameGame
     }
 
     Future.delayed(const Duration(seconds: 1), () {
-      Level world =
-          Level(levelName: levelNames[currentLevelIndex], player: player);
+      final levelName = levelNames[currentLevelIndex];
+      print('Loading level: $levelName');
+      Level world = Level(levelName: levelName, player: player);
       currentLevel = world; // Actualizar la referencia al nivel actual
       world.priority = 0;
 
@@ -132,6 +137,7 @@ class Catcat extends FlameGame
 
       add(world);
       add(cam);
+      print('Level $levelName added to the game');
     });
   }
 }
