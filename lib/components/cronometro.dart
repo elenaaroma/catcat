@@ -55,4 +55,10 @@ class Cronometro extends PositionComponent {
     acumulado = 0.0;
     texto.text = '00:00';
   }
+
+  String getCurrentTime() {
+    final segs = (milisegundos ~/ 1000).toString().padLeft(2, '0');
+    final milis = (milisegundos % 1000).toString().padLeft(3, '0');
+    return '$segs:$milis';
+  }
 }

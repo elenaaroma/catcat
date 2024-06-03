@@ -144,7 +144,8 @@ class Catcat extends FlameGame
       final levelName = levelNames[currentLevelIndex];
       print(
           'Loading level: $levelName at index: $currentLevelIndex'); // Mensaje de depuración
-      Level world = Level(levelName: levelName, player: player);
+      Level world =
+          Level(levelName: levelName, player: player, cronometro: cronometro);
       currentLevel = world; // Actualizar la referencia al nivel actual
       world.priority = 0;
 

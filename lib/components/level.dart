@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:catcat/components/colision_block.dart';
+import 'package:catcat/components/cronometro.dart';
 import 'package:catcat/components/enemy.dart';
 import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/player.dart';
@@ -10,8 +11,12 @@ import 'package:flame_tiled/flame_tiled.dart';
 class Level extends World {
   final String levelName;
   final Player player;
+  final Cronometro cronometro;
 
-  Level({required this.levelName, required this.player});
+  Level(
+      {required this.levelName,
+      required this.player,
+      required this.cronometro});
 
   late TiledComponent level;
   List<ColisionBlock> colisionBlock = [];

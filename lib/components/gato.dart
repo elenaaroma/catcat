@@ -36,6 +36,8 @@ class Gato extends SpriteAnimationComponent
     if (other is Player && !reachedCheckpoint) {
       print('colaiding');
       _reachedCheckpoint();
+      print(
+          "Time when player reaches the cat: ${game.cronometro.getCurrentTime()}");
     }
     super.onCollision(intersectionPoints, other);
   }
