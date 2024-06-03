@@ -20,7 +20,13 @@ class Catcat extends FlameGame
   late JoystickComponent joystick;
   late SpriteButtonComponent jumpButton;
   bool showJoystick = false;
-  List<String> levelNames = ['level-01', 'level-02'];
+  bool isLoadingLevel =
+      false; // Nueva bandera para controlar la carga del nivel
+  List<String> levelNames = [
+    'level-01',
+    'level-02',
+    'level-03',
+  ];
 
   int currentLevelIndex = 0;
 
@@ -105,24 +111,31 @@ class Catcat extends FlameGame
   }
 
   void loadNextLevel() {
-    if (currentLevelIndex < levelNames.length - 1) {
+    if (currentLevelIndex < levelNames.length - 1 && !isLoadingLevel) {
       currentLevelIndex++;
+      print(
+          'Loading next level with index: $currentLevelIndex'); // Mensaje de depuración
       _loadLevel();
-    } else {}
+    }
   }
 
   void _loadLevel() {
-    player = Player();
+    if (isLoadingLevel) return;
+    isLoadingLevel = true;
 
-    // Detener la música del nivel anterior si está reproduciéndose
     if (currentLevel != null) {
-      currentLevel!.stopMusic();
+      print(
+          'Removing current level: ${levelNames[currentLevelIndex]}'); // Mensaje de depuración
       remove(currentLevel!);
+      currentLevel = null;
     }
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 2), () {
+      player = Player();
+
       final levelName = levelNames[currentLevelIndex];
-      print('Loading level: $levelName');
+      print(
+          'Loading level: $levelName at index: $currentLevelIndex'); // Mensaje de depuración
       Level world = Level(levelName: levelName, player: player);
       currentLevel = world; // Actualizar la referencia al nivel actual
       world.priority = 0;
@@ -134,7 +147,9 @@ class Catcat extends FlameGame
 
       add(world);
       add(cam);
-      print('Level $levelName added to the game');
+      print(
+          'Level $levelName added to the game at index: $currentLevelIndex'); // Mensaje de depuración
+      isLoadingLevel = false;
     });
   }
 }

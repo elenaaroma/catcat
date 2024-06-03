@@ -236,7 +236,7 @@ class Player extends SpriteAnimationGroupComponent
         position.x > screenWidth ||
         position.y < 0 ||
         position.y > screenHeight) {
-      position = Vector2(100, 100);
+      position = startingPosition;
       velocidad = Vector2.zero();
     }
   }
