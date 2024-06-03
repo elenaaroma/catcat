@@ -25,7 +25,7 @@ class Player extends SpriteAnimationGroupComponent
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
   final double _gravedad = 7.9;
-  final double _salto = 260;
+  final double _salto = 460; //260
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
   double moveSpeed = 70;
