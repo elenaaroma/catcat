@@ -1,6 +1,5 @@
 import 'package:catcat/screens/play_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:catcat/screens/home_screen.dart';
 import 'package:flame/flame.dart';
 
 void main() async {

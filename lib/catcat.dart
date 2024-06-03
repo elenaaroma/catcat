@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:catcat/components/cronometro.dart';
 import 'package:catcat/components/level.dart';
 import 'package:catcat/components/player.dart';
 import 'package:flame/components.dart';
@@ -19,6 +19,7 @@ class Catcat extends FlameGame
 
   late JoystickComponent joystick;
   late SpriteButtonComponent jumpButton;
+  late Cronometro cronometro; // Agregar variable para el cronómetro
   bool showJoystick = false;
   bool isLoadingLevel =
       false; // Nueva bandera para controlar la carga del nivel
@@ -36,6 +37,9 @@ class Catcat extends FlameGame
   Future<void> onLoad() async {
     priority = 0;
     await images.loadAllImages();
+
+    cronometro = Cronometro();
+    add(cronometro); // Agregar cronómetro al juego
 
     _loadLevel();
 
@@ -151,6 +155,7 @@ class Catcat extends FlameGame
 
       add(world);
       add(cam);
+      cronometro.reiniciar(); // Reiniciar cronómetro al cargar un nuevo nivel
       print(
           'Level $levelName added to the game at index: $currentLevelIndex'); // Mensaje de depuración
       isLoadingLevel = false;
