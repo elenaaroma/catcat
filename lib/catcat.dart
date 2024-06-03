@@ -120,6 +120,10 @@ class Catcat extends FlameGame
   }
 
   void _loadLevel() {
+    if (currentLevel != null) {
+      currentLevel!.stopMusic();
+    }
+
     if (isLoadingLevel) return;
     isLoadingLevel = true;
 

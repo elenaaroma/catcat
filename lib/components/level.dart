@@ -23,14 +23,13 @@ class Level extends World {
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(32));
     add(level);
 
-    // playMusicLoop(); // Iniciar la música en bucle
+    playMusicLoop(); // Iniciar la música en bucle
     _spawningObjects();
     _addCollision();
 
     return super.onLoad();
   }
 
-/*
   Future<void> playMusicLoop() async {
     while (true) {
       await audioPlayer
@@ -44,7 +43,7 @@ class Level extends World {
   void stopMusic() {
     audioPlayer.stop();
   }
-*/
+
   @override
   void onRemove() {
     // Detener la música cuando el nivel se elimine
