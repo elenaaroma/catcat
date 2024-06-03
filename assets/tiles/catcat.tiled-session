@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-03.tmx",
+    "activeFile": "level-04.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -22,20 +22,20 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 245.66666666666669,
-                "y": 190.66666666666669
+                "x": 245,
+                "y": 190
             }
         },
         "level-02.tmx": {
             "expandedObjectLayers": [
-                7,
-                6
+                6,
+                7
             ],
             "scale": 1.711484375,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 318.1448851965125,
-                "y": 189.3093531747843
+                "x": 319.6056055142192,
+                "y": 191.93864974665632
             }
         },
         "level-03.tmx": {
@@ -46,8 +46,20 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 348.33333333333326,
-                "y": 140.66666666666669
+                "x": 320,
+                "y": 191.66666666666663
+            }
+        },
+        "level-04.tmx": {
+            "expandedObjectLayers": [
+                2,
+                3
+            ],
+            "scale": 1.711484375,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320.48203770484326,
+                "y": 191.646505683115
             }
         }
     },
@@ -58,14 +70,16 @@
     "openFiles": [
         "level-01.tmx",
         "level-02.tmx",
-        "level-03.tmx"
+        "level-03.tmx",
+        "level-04.tmx"
     ],
     "project": "catcat.tiled-project",
     "property.type": "float",
     "recentFiles": [
         "level-01.tmx",
         "level-02.tmx",
-        "level-03.tmx"
+        "level-03.tmx",
+        "level-04.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

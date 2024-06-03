@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="33">
+ <tileset firstgid="1" source="catcat.tsx"/>
+ <tileset firstgid="248" source="Decorations (32x32).tsx"/>
+ <layer id="4" name="Capa de patrones 2" width="20" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,135,136,136,137,155,135,136,136,136,136,136,136,136,136,136,136,136,137,0,
+0,173,174,174,202,155,154,155,155,155,155,155,155,155,155,141,174,174,175,0,
+0,154,155,155,158,155,154,155,155,155,155,155,155,155,155,156,155,155,156,0,
+0,135,136,136,221,0,154,155,155,155,155,155,155,155,155,160,136,136,137,0,
+0,154,155,155,156,0,154,155,155,155,155,155,155,155,155,155,155,155,156,0,
+0,154,155,155,156,155,154,155,155,155,155,155,155,155,155,155,155,155,156,0,
+0,154,155,155,160,136,170,174,142,141,174,142,155,155,155,155,155,155,156,0,
+0,154,155,155,141,174,202,155,154,156,155,154,155,155,155,155,155,155,156,0,
+0,154,155,155,156,155,158,155,154,156,155,154,155,155,155,155,155,155,156,0,
+0,173,174,174,175,174,158,174,154,156,174,173,142,141,174,174,174,174,175,0,
+0,0,0,0,0,0,158,153,154,156,0,153,154,156,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="1" name="Capa de patrones 1" width="20" height="12">
+  <data encoding="csv">
+27,60,60,60,60,49,60,60,60,60,60,60,60,60,60,60,60,60,60,28,
+42,0,0,0,0,44,119,119,0,81,64,0,0,0,81,0,0,0,0,40,
+42,0,0,0,0,44,119,119,64,255,255,255,255,255,255,0,0,0,0,40,
+50,98,98,99,24,44,0,0,64,264,265,265,265,266,0,255,97,98,98,30,
+42,0,0,24,0,44,81,81,255,255,256,64,255,0,0,0,0,0,0,40,
+42,0,0,0,0,44,0,0,267,64,263,64,267,0,0,64,0,256,0,40,
+42,0,271,272,0,63,0,81,64,0,270,64,0,255,255,255,0,263,77,40,
+42,0,278,279,81,0,0,0,0,0,81,0,0,0,264,266,262,270,77,40,
+42,0,0,0,0,0,0,25,0,0,25,64,81,0,0,0,0,0,0,40,
+42,0,0,0,0,25,0,44,0,0,44,0,0,0,0,0,0,264,266,40,
+42,0,0,0,0,44,0,44,0,0,44,0,0,0,0,0,0,0,0,40,
+46,22,22,22,22,107,96,44,96,96,106,23,82,82,21,22,22,22,22,47
+</data>
+ </layer>
+ <objectgroup id="2" name="Colisiones">
+  <object id="1" x="1" y="0" width="641" height="32"/>
+  <object id="2" x="609" y="-2" width="34" height="385"/>
+  <object id="4" x="-4" y="-4" width="34" height="394"/>
+  <object id="5" x="-10" y="97" width="137" height="30"/>
+  <object id="6" x="160" y="288" width="32" height="97"/>
+  <object id="7" x="223" y="256" width="34" height="129"/>
+  <object id="9" x="383" y="160" width="34" height="13"/>
+  <object id="10" x="449" y="224" width="62" height="13"/>
+  <object id="13" x="513" y="95" width="129" height="32"/>
+  <object id="14" x="321" y="257" width="30" height="125"/>
+  <object id="20" x="160" y="-1" width="32" height="223"/>
+  <object id="23" x="545" y="289" width="67" height="12"/>
+  <object id="24" x="258" y="159" width="31" height="12"/>
+  <object id="25" x="289" y="96" width="158" height="12"/>
+  <object id="26" x="-2" y="352" width="194" height="37"/>
+  <object id="28" x="323" y="351" width="60" height="49"/>
+  <object id="29" x="447" y="351" width="198" height="35"/>
+ </objectgroup>
+ <objectgroup id="3" name="personajes">
+  <object id="16" type="Player" x="58" y="73"/>
+  <object id="30" type="Gato" x="586" y="78"/>
+  <object id="31" type="Enemy" x="288" y="65" width="32" height="30">
+   <properties>
+    <property name="isVertical" type="bool" value="false"/>
+    <property name="offNeg" type="float" value="0"/>
+    <property name="offPos" type="float" value="4"/>
+   </properties>
+  </object>
+  <object id="32" type="Enemy" x="449" y="321" width="32" height="30">
+   <properties>
+    <property name="isVertical" type="bool" value="false"/>
+    <property name="offNeg" type="float" value="0"/>
+    <property name="offPos" type="float" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -25,7 +25,7 @@ class Catcat extends FlameGame
   bool isLoadingLevel =
       false; // Nueva bandera para controlar la carga del nivel
   List<String> levelNames = [
-    'level-01',
+    'level-04',
     'level-02',
     'level-03',
   ];
