@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:catcat/screens/play_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterDialog extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -8,6 +10,69 @@ class RegisterDialog extends StatelessWidget {
       TextEditingController();
 
   RegisterDialog({super.key});
+
+  Future<void> _registerUser(BuildContext context) async {
+    if (emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor, complete todos los campos'),
+        ),
+      );
+      return;
+    }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Las contraseñas no coinciden'),
+        ),
+      );
+      return;
+    }
+
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      Navigator.of(context).pop();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => PlayScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('La contraseña proporcionada es demasiado débil'),
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('Ese correo electrónico ya tiene una cuenta vinculada'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.message}'),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,31 +104,7 @@ class RegisterDialog extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                if (emailController.text.isEmpty ||
-                    passwordController.text.isEmpty ||
-                    confirmPasswordController.text.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Por favor, complete todos los campos'),
-                    ),
-                  );
-                } else if (passwordController.text !=
-                    confirmPasswordController.text) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Las contraseñas no coinciden'),
-                    ),
-                  );
-                } else {
-                  // Aquí agregarás la funcionalidad para registrar el usuario
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PlayScreen()),
-                  );
-                }
-              },
+              onPressed: () => _registerUser(context),
               child: const Text('Confirmar'),
             ),
           ],

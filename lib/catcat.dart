@@ -20,6 +20,7 @@ class Catcat extends FlameGame
   late JoystickComponent joystick;
   late SpriteButtonComponent jumpButton;
   late Cronometro cronometro; // Agregar variable para el cronómetro
+  int deathCount = 0; // Contador de muertes
   bool showJoystick = false;
   bool isLoadingLevel =
       false; // Nueva bandera para controlar la carga del nivel
@@ -120,6 +121,8 @@ class Catcat extends FlameGame
       print(
           'Loading next level with index: $currentLevelIndex'); // Mensaje de depuración
       _loadLevel();
+      printDeathCount();
+      deathCount = 0;
     }
   }
 
@@ -139,7 +142,7 @@ class Catcat extends FlameGame
     }
 
     Future.delayed(const Duration(seconds: 2), () {
-      player = Player();
+      player = Player(personaje: 'red-knight');
 
       final levelName = levelNames[currentLevelIndex];
       print(
@@ -157,9 +160,18 @@ class Catcat extends FlameGame
       add(world);
       add(cam);
       cronometro.reiniciar(); // Reiniciar cronómetro al cargar un nuevo nivel
+      // Imprimir número de muertes al cambiar de nivel
       print(
           'Level $levelName added to the game at index: $currentLevelIndex'); // Mensaje de depuración
       isLoadingLevel = false;
     });
+  }
+
+  void incrementDeathCount() {
+    deathCount++;
+  }
+
+  void printDeathCount() {
+    print('Total deaths: $deathCount');
   }
 }
