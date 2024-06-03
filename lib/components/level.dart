@@ -10,11 +10,13 @@ import 'package:flame_tiled/flame_tiled.dart';
 class Level extends World {
   final String levelName;
   final Player player;
+  bool isLevelActive = true; // Variable para controlar si el nivel está activo
 
   Level({required this.levelName, required this.player});
 
   late TiledComponent level;
-  List<ColisionBlock> colisionBlock = [];
+  List<ColisionBlock> colisionBlocks = [];
+  List<Enemy> enemies = [];
 
   AudioPlayer audioPlayer = AudioPlayer();
 
@@ -31,7 +33,8 @@ class Level extends World {
   }
 
   Future<void> playMusicLoop() async {
-    while (true) {
+    while (isLevelActive) {
+      // Revisar si el nivel está activo antes de continuar el bucle
       await audioPlayer
           .stop(); // Detener cualquier música que esté reproduciéndose
       await audioPlayer.play(AssetSource('audio/musica_juego.mp3'));
@@ -42,12 +45,26 @@ class Level extends World {
 
   void stopMusic() {
     audioPlayer.stop();
+    isLevelActive = false; // Detener el bucle de la música
   }
 
   @override
   void onRemove() {
     // Detener la música cuando el nivel se elimine
-    audioPlayer.stop();
+    stopMusic();
+
+    // Eliminar enemigos
+    for (var enemy in enemies) {
+      remove(enemy);
+    }
+    enemies.clear();
+
+    // Eliminar bloques de colisión
+    for (var block in colisionBlocks) {
+      remove(block);
+    }
+    colisionBlocks.clear();
+
     super.onRemove();
   }
 
@@ -75,6 +92,7 @@ class Level extends World {
                 offNeg: offNeg,
                 offPos: offPos,
                 position: Vector2(personaje.x - 25, personaje.y - 25));
+            enemies.add(enemigo);
             add(enemigo);
             break;
           default:
@@ -93,7 +111,7 @@ class Level extends World {
                 position: Vector2(colision.x, colision.y),
                 size: Vector2(colision.width, colision.height),
                 isPlatform: true);
-            colisionBlock.add(platform);
+            colisionBlocks.add(platform);
             add(platform);
             break;
           default:
@@ -101,12 +119,12 @@ class Level extends World {
                 position: Vector2(colision.x, colision.y),
                 size: Vector2(colision.width, colision.height),
                 isPlatform: false);
-            colisionBlock.add(block);
+            colisionBlocks.add(block);
             add(block);
         }
       }
     }
 
-    player.colisionBlocks = colisionBlock;
+    player.colisionBlocks = colisionBlocks;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:catcat/catcat.dart';
+import 'package:catcat/components/enemy.dart';
 import 'package:catcat/components/gato.dart';
 import 'package:catcat/components/servicios.dart';
 import 'package:flame/collisions.dart';
@@ -23,11 +24,11 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation deadAnimation;
 
 //movilidad del personaje, en que estado esta y las velocidades a las que se mueve
-  final double _gravedad = 6.9;
-  final double _salto = 390;
+  final double _gravedad = 7.9;
+  final double _salto = 260;
   final double _terminalVelocity = 300;
   double movimientoHorizontal = 0;
-  double moveSpeed = 130;
+  double moveSpeed = 70;
   Vector2 startingPosition = Vector2.zero();
   Vector2 velocidad = Vector2.zero();
   bool isFloor = false;
@@ -41,6 +42,9 @@ class Player extends SpriteAnimationGroupComponent
     width: 16, // Ancho del hitbox
     height: 28,
   );
+
+  double fixDeltaTime = 1 / 60;
+  double acumulatedTime = 0;
 
   //para que se de la vuelta
 
@@ -60,12 +64,19 @@ class Player extends SpriteAnimationGroupComponent
 //updatea la posicion
   @override
   void update(double dt) {
-    _updatePlayerState();
-    _updetePlayerMovimiento(dt);
-    _checkHorizontalCollision();
-    _applyGravity(dt);
-    _checkVerticalCollision();
-    _checkOutOfBounds();
+    acumulatedTime += dt;
+
+    while (acumulatedTime >= fixDeltaTime) {
+      if (!reachedCheckpoint) {
+        _updatePlayerState();
+        _updetePlayerMovimiento(fixDeltaTime);
+        _checkHorizontalCollision();
+        _applyGravity(fixDeltaTime);
+        _checkVerticalCollision();
+        _checkOutOfBounds();
+      }
+      acumulatedTime -= fixDeltaTime;
+    }
 
     super.update(dt);
   }
@@ -89,6 +100,7 @@ class Player extends SpriteAnimationGroupComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
       if (other is Gato) _reachedCheckpoint();
+      if (other is Enemy) _respawn();
     }
 
     super.onCollision(intersectionPoints, other);
@@ -224,9 +236,8 @@ class Player extends SpriteAnimationGroupComponent
         position.x > screenWidth ||
         position.y < 0 ||
         position.y > screenHeight) {
-      position = Vector2(
-          100, 100); // Puedes ajustar esta posición inicial según sea necesario
-      velocidad = Vector2.zero(); // Resetear la velocidad
+      position = Vector2(100, 100);
+      velocidad = Vector2.zero();
     }
   }
 
@@ -241,5 +252,9 @@ class Player extends SpriteAnimationGroupComponent
         game.loadNextLevel();
       });
     });
+  }
+
+  void _respawn() {
+    position = startingPosition;
   }
 }

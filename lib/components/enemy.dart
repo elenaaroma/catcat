@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:catcat/catcat.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 class Enemy extends SpriteAnimationComponent with HasGameRef<Catcat> {
@@ -24,6 +25,12 @@ class Enemy extends SpriteAnimationComponent with HasGameRef<Catcat> {
 
   @override
   FutureOr<void> onLoad() {
+    add(RectangleHitbox(
+        position: Vector2(40, 40),
+        size: Vector2(20, 20),
+        collisionType: CollisionType.passive));
+    debugMode = true;
+
     if (isVertical) {
       rangeNeg = position.y - offNeg * tileSize;
       rangePos = position.y + offPos * tileSize;
