@@ -30,10 +30,12 @@ class Player extends SpriteAnimationGroupComponent
   double movimientoHorizontal = 0;
   double moveSpeed = 70;
   Vector2 startingPosition = Vector2.zero();
+  //Vector2 startingPosition = Vector2(500,500);
   Vector2 velocidad = Vector2.zero();
   bool isFloor = false;
   bool hasJumped = false;
   bool reachedCheckpoint = false;
+  bool isFlip = false;
   List<ColisionBlock> colisionBlocks = [];
 
   CustomHitbox hitbox = CustomHitbox(
@@ -142,8 +144,10 @@ class Player extends SpriteAnimationGroupComponent
 
     if (velocidad.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
+      isFlip = true;
     } else if (velocidad.x > 0 && scale.x < 0) {
       flipHorizontallyAroundCenter();
+      isFlip = false;
     }
 
     if (velocidad.x > 0 || velocidad.x < 0) {
@@ -238,7 +242,13 @@ class Player extends SpriteAnimationGroupComponent
         position.y > screenHeight) {
       position = startingPosition;
       velocidad = Vector2.zero();
+      if (isFlip){
+        flipHorizontallyAroundCenter();
+        isFlip = false;
+      }
     }
+
+
   }
 
   void _reachedCheckpoint() {
@@ -255,6 +265,10 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _respawn() {
+
+    print('ç**********************************$isFlip' );
+
+
     position = startingPosition;
     game.incrementDeathCount();
   }
