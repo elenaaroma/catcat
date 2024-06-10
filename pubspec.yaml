@@ -47,7 +47,6 @@ flutter:
     - assets/images/cat/idle.png
     - assets/images/cat/fin.png
     - assets/images/HUD/
-    - assets/images/fondo/fondo1.jpg
     - assets/images/fondo/fondo3.jpg
     - assets/audio/musica_juego.mp3
     - assets/images/logo/logo.jpg

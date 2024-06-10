@@ -8,6 +8,8 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Catcat extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
@@ -25,9 +27,10 @@ class Catcat extends FlameGame
   bool isLoadingLevel =
       false; // Nueva bandera para controlar la carga del nivel
   List<String> levelNames = [
-    'level-04',
+    'level-01',
     'level-02',
     'level-03',
+    'level-04',
   ];
 
   int currentLevelIndex = 0;
@@ -117,11 +120,11 @@ class Catcat extends FlameGame
 
   void loadNextLevel() {
     if (currentLevelIndex < levelNames.length - 1 && !isLoadingLevel) {
+      printDeathCount(); // Llama a printDeathCount antes de incrementar el índice del nivel
       currentLevelIndex++;
       print(
           'Loading next level with index: $currentLevelIndex'); // Mensaje de depuración
       _loadLevel();
-      printDeathCount();
       deathCount = 0;
     }
   }
@@ -171,7 +174,31 @@ class Catcat extends FlameGame
     deathCount++;
   }
 
+  Future<void> updateDeathCountInFirestore(int deathCount) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final firestore = FirebaseFirestore.instance;
+
+      // Estructura del documento a guardar
+      final puntuacion = {
+        'muertes': deathCount,
+        'tiempo': cronometro
+            .getCurrentTime(), // Asegúrate de tener este método en tu cronómetro
+      };
+
+      // Crear o actualizar el documento en la colección puntuaciones
+      await firestore
+          .collection('puntuaciones')
+          .doc(user.email) // Usar el email del usuario como ID del documento
+          .collection('niveles')
+          .doc(levelNames[
+              currentLevelIndex]) // Usar el nombre del nivel como ID del documento
+          .set(puntuacion, SetOptions(merge: true));
+    }
+  }
+
   void printDeathCount() {
     print('Total deaths: $deathCount');
+    updateDeathCountInFirestore(deathCount);
   }
 }

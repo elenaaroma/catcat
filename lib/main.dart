@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PlayScreen(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false, // Quitar el banner de depuración
     );
   }

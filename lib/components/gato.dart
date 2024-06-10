@@ -16,8 +16,6 @@ class Gato extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
-
     add(RectangleHitbox(
         position: Vector2(5, 5),
         size: Vector2(20, 20),

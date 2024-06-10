@@ -29,7 +29,6 @@ class Enemy extends SpriteAnimationComponent with HasGameRef<Catcat> {
         position: Vector2(40, 40),
         size: Vector2(20, 20),
         collisionType: CollisionType.passive));
-    debugMode = true;
 
     if (isVertical) {
       rangeNeg = position.y - offNeg * tileSize;
